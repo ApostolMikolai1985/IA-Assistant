@@ -1,0 +1,90 @@
+[
+  {
+    "id": "daily-report",
+    "title": "RAPORT DZIENNY Z WYKONANYCH PRAC",
+    "sections": [
+      {
+        "title": "Dane ogólne",
+        "items": [
+          "Data: BRAK DANYCH",
+          "Obiekt / lokalizacja: klient demo - lokalizacja niepodana",
+          "Ekipa: ekipa terenowa",
+          "Charakter danych: przykład demonstracyjny"
+        ]
+      },
+      {
+        "title": "Wykonane prace",
+        "items": ["Wykonano odcinek kanału 160.", "Podana długość: około 12 m."]
+      },
+      {
+        "title": "Braki / materiały",
+        "items": ["Brakuje: 2 kolana.", "Brakuje: obejmy - ilość BRAK DANYCH."]
+      },
+      {
+        "title": "Plan dalszych prac",
+        "items": ["Powrót na obiekt i dokończenie mocowania - plan, nie fakt wykonania."]
+      }
+    ],
+    "qa": ["PLAN != FAKT: sprawdzono.", "Nie wymyślono danych: TAK."]
+  },
+  {
+    "id": "material-request",
+    "title": "ZAPOTRZEBOWANIE NA MATERIAŁ",
+    "sections": [
+      {
+        "title": "Dane ogólne",
+        "items": [
+          "Data zgłoszenia: BRAK DANYCH",
+          "Termin potrzebny na: jutro - wymaga potwierdzenia daty",
+          "Obiekt / lokalizacja: BRAK DANYCH",
+          "Źródło: wiadomość demonstracyjna"
+        ]
+      },
+      {
+        "title": "Lista materiałów",
+        "items": [
+          "Kolano 160 - 4 szt.",
+          "Kanał 160 - 10 m.",
+          "Taśma aluminiowa - 2 rolki.",
+          "Obejmy do kanału - ilość WYMAGA POTWIERDZENIA."
+        ]
+      }
+    ],
+    "qa": ["Ceny: nie podano.", "Dostawca: nie podano.", "Nie wymyślono parametrów: TAK."]
+  },
+  {
+    "id": "service-confirmation",
+    "title": "POTWIERDZENIE WYKONANIA USŁUGI",
+    "sections": [
+      {
+        "title": "Dane usługi",
+        "items": [
+          "Data wykonania: BRAK DANYCH",
+          "Klient / obiekt: klient demo",
+          "Urządzenie: BRAK DANYCH",
+          "Nr seryjny / model: BRAK DANYCH"
+        ]
+      },
+      {
+        "title": "Wykonane czynności",
+        "items": [
+          "Wyczyszczono jednostkę.",
+          "Sprawdzono odpływ skroplin.",
+          "Według informacji z wiadomości urządzenie działa."
+        ]
+      },
+      {
+        "title": "Braki i zalecenia",
+        "items": [
+          "Brak zdjęcia tabliczki znamionowej.",
+          "Filtr do wymiany przy następnym serwisie - zalecenie, nie wykonanie."
+        ]
+      }
+    ],
+    "qa": [
+      "Odbiór formalny: BRAK DANYCH.",
+      "Podpis klienta: BRAK DANYCH.",
+      "Wymaga kontroli człowieka przed użyciem: TAK."
+    ]
+  }
+]
