@@ -91,6 +91,8 @@ demo/
 
 Projekt jest statycznym frontendem Vite. Workflow `.github/workflows/deploy-pages.yml` buduje aplikację i publikuje katalog `dist` w GitHub Pages po zmianie w branchu `main`. Projekt nie wymaga zmiennych środowiskowych, bazy danych ani backendu.
 
+Publiczny URL: [https://apostolmikolai1985.github.io/IA-Assistant/](https://apostolmikolai1985.github.io/IA-Assistant/)
+
 ## Kontakt
 
 - E-mail: [filanovich1985@gmail.com](mailto:filanovich1985@gmail.com)
