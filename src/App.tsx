@@ -177,7 +177,7 @@ function App() {
             <article className="pilot-card">
               <div className="price-line">
                 <span>3000 zł</span>
-                <strong>netto / brutto: TO CONFIGURE</strong>
+                <strong>Cena pilotażu; szczegóły rozliczenia ustalane przed zamówieniem</strong>
               </div>
               <p>
                 W pilotażu nie obiecujemy integracji ERP, Make, n8n ani pełnej automatyzacji, jeśli
@@ -215,8 +215,14 @@ function App() {
           </div>
           <div className="contact-box">
             <PhoneCall aria-hidden="true" />
-            <strong>Kontakt: TO CONFIGURE</strong>
-            <span>E-mail / telefon / formularz zostaną podłączone po decyzji właściciela produktu.</span>
+            <strong>Kontakt w sprawie pilotażu</strong>
+            <a className="contact-link" href="mailto:filanovich1985@gmail.com">
+              filanovich1985@gmail.com
+            </a>
+            <a className="contact-link" href="tel:+48793192773">
+              +48 793 192 773
+            </a>
+            <span>Napisz lub zadzwoń, aby omówić trzy procesy do wersji pilotażowej.</span>
           </div>
         </section>
       </main>

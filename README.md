@@ -1,6 +1,6 @@
-# Firmowy Asystent AI dla małych firm technicznych
+# Firmowy Asystent AI — Sales MVP / client demo v0.2
 
-Sales MVP produktu B2B: premium web demo pokazujące, jak chaotyczna wiadomość z firmy technicznej może zostać uporządkowana w gotowy dokument po polsku.
+Sales MVP produktu B2B: web demo pokazujące, jak chaotyczna wiadomość z firmy technicznej może zostać uporządkowana w gotowy dokument po polsku.
 
 Ten projekt nie udaje produkcyjnego backendu AI. Interaktywne demo działa na przygotowanych scenariuszach i danych demonstracyjnych.
 
@@ -33,7 +33,7 @@ Pokaż nam 3 typowe wiadomości z Twojej firmy. Zbudujemy na ich podstawie 3 got
 ## Uruchomienie
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -49,11 +49,14 @@ Build:
 npm run build
 ```
 
-Lint/typecheck:
+Typecheck oraz kontrola skryptu `lint`:
 
 ```bash
+npm run typecheck
 npm run lint
 ```
+
+W tej wersji `npm run lint` uruchamia `tsc --noEmit`. Repozytorium nie zawiera konfiguracji ESLint, dlatego ten krok nie jest pełnym audytem ESLint.
 
 ## Struktura
 
@@ -76,13 +79,19 @@ demo/
   sample_outputs_pl.json
 ```
 
-## Konfiguracja przed pokazem klientowi
+## Aktualny zakres i ograniczenia
 
-- `Kontakt: TO CONFIGURE` w sekcji CTA.
-- Status ceny netto/brutto: `TO CONFIGURE`.
-- Docelowa nazwa produktu: `Firmowy Asystent AI`; robocza nazwa może zostać zmieniona w copy.
-- Hosting Vercel: skonfigurować po wyborze repozytorium docelowego.
+- Interaktywne demo działa na trzech przygotowanych scenariuszach.
+- Projekt nie ma backendu AI, bazy danych, logowania, płatności ani integracji ERP/CRM.
+- Nie wysyła wiadomości, nie generuje PDF i nie zapisuje danych klienta.
+- Każdy wynik wymaga kontroli człowieka przed użyciem operacyjnym.
+- Cena pilotażu wynosi `3000 zł`; szczegóły rozliczenia są ustalane przed zamówieniem.
 
 ## Deployment
 
-Projekt jest statycznym frontendem Vite, gotowym do wdrożenia na Vercel. Nie wymaga bazy danych ani backendu.
+Projekt jest statycznym frontendem Vite. Workflow `.github/workflows/deploy-pages.yml` buduje aplikację i publikuje katalog `dist` w GitHub Pages po zmianie w branchu `main`. Projekt nie wymaga zmiennych środowiskowych, bazy danych ani backendu.
+
+## Kontakt
+
+- E-mail: [filanovich1985@gmail.com](mailto:filanovich1985@gmail.com)
+- Telefon: [+48 793 192 773](tel:+48793192773)

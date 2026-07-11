@@ -2,14 +2,14 @@
 
 ## Wymagania
 
-- Node.js 18+.
+- Node.js `^20.19.0` lub `>=22.12.0`.
 - npm.
 - Dostęp do repozytorium.
 
 ## Instalacja lokalna
 
 ```bash
-npm install
+npm ci
 ```
 
 ## Start dev server
@@ -42,21 +42,22 @@ dist/
 npm run preview
 ```
 
-## Vercel
+## GitHub Pages
 
 Ustawienia:
 
-- Framework preset: Vite.
 - Build command: `npm run build`.
 - Output directory: `dist`.
-- Install command: `npm install`.
+- Install command: `npm ci`.
 - Environment variables: brak wymaganych w MVP.
+- Vite base path: `/IA-Assistant/`.
+- Workflow: `.github/workflows/deploy-pages.yml`.
 
 ## Konfiguracja przed sprzedażą
 
-W produkcie należy ustawić:
+Przed sprzedażą należy potwierdzić:
 
-- kontakt sprzedażowy: `TO CONFIGURE`,
-- status ceny netto/brutto: `TO CONFIGURE`,
-- docelową domenę,
+- czy kontakt `filanovich1985@gmail.com` i `+48 793 192 773` pozostaje aktualny,
+- szczegóły rozliczenia ceny `3000 zł`,
+- ewentualną docelową domenę,
 - docelową nazwę produktu, jeżeli właściciel nie chce używać nazwy roboczej.

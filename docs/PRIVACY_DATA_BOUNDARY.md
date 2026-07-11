@@ -9,15 +9,15 @@ Ten projekt ma być neutralnym produktem B2B. Nie może zawierać danych prywatn
 - fikcyjne dane demonstracyjne;
 - ogólne przykłady branż;
 - neutralne opisy procesów;
-- placeholdery oznaczone jako `TO CONFIGURE`;
+- publiczny kontakt produktowy podany jawnie przez właściciela;
 - pola `BRAK DANYCH`, `DO UZUPEŁNIENIA`, `WYMAGA POTWIERDZENIA`.
 
 ## Dane niedozwolone
 
 - dane osobowe użytkownika lub pracowników;
 - prawdziwe imiona i nazwiska z projektów źródłowych;
-- numery telefonów;
-- adresy e-mail;
+- numery telefonów innych osób;
+- adresy e-mail innych osób;
 - prawdziwe adresy obiektów;
 - nazwy klientów;
 - konflikty personalne;
@@ -42,10 +42,9 @@ Jeżeli dokument ma użyć faktu zewnętrznego, który może się zmienić, trze
 
 ## Zasada kontaktu
 
-Nie wolno wymyślać e-maila ani numeru telefonu. Kontakt pozostaje:
+Nie wolno wymyślać e-maila ani numeru telefonu. Publiczny kontakt produktowy został podany przez właściciela:
 
 ```text
-TO CONFIGURE
+filanovich1985@gmail.com
++48 793 192 773
 ```
-
-do czasu podania prawdziwych danych przez właściciela produktu.

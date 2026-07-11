@@ -2,7 +2,8 @@
 
 ## Build i technika
 
-- [ ] `npm install` wykonane.
+- [ ] `npm ci` wykonane.
+- [ ] `npm run typecheck` przechodzi.
 - [ ] `npm run lint` przechodzi.
 - [ ] `npm run build` przechodzi.
 - [ ] Strona działa lokalnie.
@@ -57,4 +58,4 @@
 - [ ] W 60 sekund widać problem, demo i ofertę.
 - [ ] Blok `Pilotaż wdrożeniowy — 3000 zł` jest konkretny.
 - [ ] CTA brzmi: pokaż 3 wiadomości z firmy.
-- [ ] Kontakt jest oznaczony jako `TO CONFIGURE`, a nie wymyślony.
+- [ ] Kontakt odpowiada danym podanym przez właściciela produktu.

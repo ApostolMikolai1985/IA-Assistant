@@ -602,6 +602,23 @@ h3 {
   line-height: 1.5;
 }
 
+.contact-link {
+  color: var(--ink);
+  font-weight: 850;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.contact-link:hover {
+  color: var(--red);
+}
+
+.contact-link:focus-visible {
+  border-radius: 0.25rem;
+  outline: 3px solid rgba(198, 40, 40, 0.3);
+  outline-offset: 3px;
+}
+
 .site-footer {
   display: grid;
   gap: 0.5rem;

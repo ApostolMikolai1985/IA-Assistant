@@ -8,7 +8,7 @@ CANDIDATE: przyszłe integracje, prawdziwe dane klienta, automatyzacje, backend 
 
 ## Aktywna wersja
 
-- Branch: `feature/sales-mvp-3000-pln`.
+- Branch: `main`.
 - Frontend: `src/`.
 - Aktywne demo workflow: `src/data/workflows.ts`.
 - Dane demonstracyjne do audytu: `demo/sample_inputs_pl.json`, `demo/sample_outputs_pl.json`.
@@ -39,13 +39,14 @@ WIADOMOŚĆ Z FIRMY
 ## Jak uruchomić
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
 ## Jak testować
 
 ```bash
+npm run typecheck
 npm run lint
 npm run build
 ```
@@ -61,10 +62,10 @@ Manualnie sprawdź:
 
 ## Jak deployować
 
-Vercel:
+GitHub Pages:
 
-1. Import repozytorium.
-2. Framework: Vite.
+1. Ustaw źródło Pages na `GitHub Actions`.
+2. Workflow `.github/workflows/deploy-pages.yml` uruchamia się po zmianie w `main`.
 3. Build command: `npm run build`.
 4. Output directory: `dist`.
 5. Environment variables: brak wymaganych w MVP.
