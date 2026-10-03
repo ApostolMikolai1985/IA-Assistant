@@ -544,3 +544,142 @@ html,body{max-width:100%;overflow-x:hidden}
   .v5-quick a{font-size:.56rem!important;gap:4px!important}
   .v5-quick i{font-size:.95rem!important}
 }
+
+
+/* =========================================================
+   V5.2 — ATMOSPHERIC GLASS BACKGROUND PASS
+   Removes flat white fields while preserving readability.
+   ========================================================= */
+.home-v5{
+  background:
+    linear-gradient(180deg,rgba(6,20,45,.24),rgba(235,241,247,.58) 43%,rgba(9,27,54,.18)),
+    url("../assets/img/1000009019.webp") center 18% / cover fixed no-repeat;
+}
+.v5-main-light{
+  position:relative;
+  background:
+    radial-gradient(circle at 8% 8%,rgba(239,208,136,.28),transparent 24rem),
+    radial-gradient(circle at 92% 42%,rgba(157,47,142,.12),transparent 28rem),
+    linear-gradient(180deg,rgba(248,250,253,.91),rgba(236,242,248,.85) 52%,rgba(249,246,239,.91)) !important;
+  backdrop-filter:blur(4px) saturate(1.08);
+  border-top:1px solid rgba(255,255,255,.55);
+  border-bottom:1px solid rgba(255,255,255,.5);
+}
+.v5-main-light:before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;
+  background:
+    linear-gradient(115deg,transparent 0 28%,rgba(255,255,255,.58) 29%,transparent 30% 64%,rgba(216,173,85,.20) 65%,transparent 66%),
+    radial-gradient(circle at 18% 76%,rgba(255,255,255,.72),transparent 18rem);
+  mix-blend-mode:soft-light;
+}
+.v5-main-light>.container{position:relative;z-index:1}
+.v5-quick-inner{
+  background:rgba(251,252,253,.86)!important;
+  border-color:rgba(255,255,255,.75)!important;
+  backdrop-filter:blur(18px) saturate(1.1);
+}
+.v5-quick a{background:rgba(255,255,255,.16)}
+.v5-quick a:hover{background:rgba(248,239,216,.82)}
+.v5-quick-all{background:linear-gradient(180deg,rgba(255,246,220,.92),rgba(238,210,141,.9))!important}
+.v5-block-head>a,.v5-pills button{
+  background:rgba(255,255,255,.68)!important;
+  backdrop-filter:blur(10px);
+}
+.v5-facts{
+  background:rgba(255,255,255,.73)!important;
+  border-color:rgba(255,255,255,.72)!important;
+  backdrop-filter:blur(15px) saturate(1.08);
+}
+.v5-facts>div{border-color:rgba(92,112,139,.16)!important}
+.v5-contact{
+  position:relative;
+  background:
+    linear-gradient(180deg,rgba(232,239,247,.90),rgba(224,233,243,.83)),
+    url("../assets/img/1000008989.webp") center 38% / cover no-repeat !important;
+  backdrop-filter:blur(6px);
+}
+.v5-contact:before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 80% 30%,rgba(158,39,140,.13),transparent 22rem);
+}
+.v5-contact>.container{position:relative;z-index:1}
+.v5-contact-data{
+  padding:18px!important;border-radius:14px;
+  background:rgba(255,255,255,.60);
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:0 10px 28px rgba(13,31,58,.08);
+  backdrop-filter:blur(12px);
+}
+.v5-map{background:
+  linear-gradient(135deg,rgba(19,44,81,.91),rgba(30,60,101,.89)),
+  url("../assets/img/1000009019.webp") center/cover no-repeat !important;
+}
+.v5-book-card{background:
+  linear-gradient(145deg,rgba(40,16,74,.94),rgba(17,29,61,.92)),
+  url("../assets/img/1000009899.webp") center/cover no-repeat !important;
+}
+
+/* Inner pages: one continuous atmospheric canvas + translucent content layers. */
+.site-v4{
+  background:
+    linear-gradient(180deg,rgba(232,238,245,.84),rgba(239,243,248,.78)),
+    url("../assets/img/1000009019.webp") center 16% / cover fixed no-repeat !important;
+}
+.site-v4 main{background:transparent!important}
+.site-v4 main>section:not(.page-hero){
+  position:relative;
+  background:rgba(247,249,252,.83)!important;
+  backdrop-filter:blur(16px) saturate(1.08);
+  border-top:1px solid rgba(255,255,255,.56);
+  border-bottom:1px solid rgba(128,146,169,.12);
+}
+.site-v4 main>section:nth-of-type(even):not(.page-hero){
+  background:rgba(232,239,246,.78)!important;
+}
+.site-v4 .card,
+.site-v4 .notice,
+.site-v4 .filters button,
+.site-v4 .field input,
+.site-v4 .field select,
+.site-v4 .field textarea{
+  background:rgba(255,255,255,.72)!important;
+  backdrop-filter:blur(10px);
+}
+.site-v4 .gallery-item{
+  background:rgba(255,255,255,.40);
+  box-shadow:0 12px 28px rgba(12,31,58,.12);
+}
+.site-v4 .ribbon{
+  background:linear-gradient(90deg,rgba(247,238,216,.82),rgba(255,247,230,.73))!important;
+  backdrop-filter:blur(10px);
+}
+.site-v4 footer{background:rgba(7,21,46,.96)!important}
+
+@media(max-width:760px){
+  .home-v5,.site-v4{background-attachment:scroll!important}
+  .v5-main-light{backdrop-filter:none}
+}
+@media(max-width:420px){
+  .v5-hero h1{font-size:1.92rem!important;line-height:.96!important;letter-spacing:-.05em!important;overflow:visible!important}
+  .v5-hero-copy{overflow:visible!important}
+}
+
+
+/* V5.2.1 stronger atmospheric read-through */
+.v5-main-light{
+  background:
+    radial-gradient(circle at 8% 8%,rgba(239,208,136,.33),transparent 24rem),
+    radial-gradient(circle at 92% 42%,rgba(157,47,142,.16),transparent 28rem),
+    linear-gradient(180deg,rgba(246,249,252,.84),rgba(229,237,246,.78) 52%,rgba(247,242,232,.84)) !important;
+}
+.v5-contact{
+  background:
+    linear-gradient(180deg,rgba(229,237,246,.84),rgba(217,229,240,.78)),
+    url("../assets/img/1000008989.webp") center 38% / cover no-repeat !important;
+}
+.site-v4 main>section:not(.page-hero){
+  background:rgba(244,248,251,.76)!important;
+}
+.site-v4 main>section:nth-of-type(even):not(.page-hero){
+  background:rgba(228,236,244,.70)!important;
+}
