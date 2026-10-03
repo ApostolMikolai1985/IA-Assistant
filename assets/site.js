@@ -78,3 +78,42 @@ root.querySelectorAll('form[data-lead]').forEach(f=>f.addEventListener('submit',
     menu?.setAttribute('aria-expanded','false');
   }));
 })();
+
+
+;(()=>{
+  if(!document.body.classList.contains('home-v5')) return;
+
+  // Reference-style gallery category pills.
+  const pills=[...document.querySelectorAll('[data-v5-cat]')];
+  const gallery=[...document.querySelectorAll('[data-v5-kind]')];
+  pills.forEach(btn=>btn.addEventListener('click',()=>{
+    pills.forEach(x=>x.classList.toggle('active',x===btn));
+    const cat=btn.dataset.v5Cat;
+    gallery.forEach(item=>item.hidden=!(cat==='all'||item.dataset.v5Kind===cat));
+  }));
+
+  // Slight hero depth, preserving accessibility/reduced motion.
+  const hero=document.querySelector('.v5-hero-bg img');
+  if(hero && matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    let raf=0;
+    addEventListener('pointermove',e=>{
+      cancelAnimationFrame(raf);
+      raf=requestAnimationFrame(()=>{
+        const x=(e.clientX/innerWidth-.5)*5;
+        const y=(e.clientY/innerHeight-.5)*3;
+        hero.style.transform='scale(1.02) translate('+(-x)+'px,'+(-y)+'px)';
+      });
+    },{passive:true});
+  }
+
+  // Horizontal wheel assist on gallery.
+  const rail=document.querySelector('[data-v5-gallery]');
+  if(rail && matchMedia('(pointer:fine)').matches){
+    rail.addEventListener('wheel',e=>{
+      if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+        e.preventDefault();
+        rail.scrollBy({left:e.deltaY*.8,behavior:'smooth'});
+      }
+    },{passive:false});
+  }
+})();
