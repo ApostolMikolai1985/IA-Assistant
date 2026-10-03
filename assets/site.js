@@ -222,3 +222,130 @@ root.querySelectorAll('form[data-lead]').forEach(f=>f.addEventListener('submit',
     },1000);
   }
 })();
+
+
+/* UNIFIED PAGE SYSTEM — same rhythm, same controls, richer transitions */
+;(()=>{
+  const body=document.body;
+  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+  const pages=[
+    {href:'index.html',label:'Start',icon:'✦'},
+    {href:'history.html',label:'O nas',icon:'◇'},
+    {href:'glow-club.html',label:'Klub',icon:'♢'},
+    {href:'strefa81.html',label:'STREFA81',icon:'◫'},
+    {href:'events.html',label:'Wydarzenia',icon:'▣'},
+    {href:'hotel.html',label:'Hotel',icon:'▤'},
+    {href:'weddings.html',label:'Wesela',icon:'♡'},
+    {href:'business.html',label:'Biznes',icon:'♟'},
+    {href:'gallery.html',label:'Galeria',icon:'▧'},
+    {href:'members.html',label:'Klubowicze',icon:'☆'},
+    {href:'contact.html',label:'Kontakt',icon:'⌖'}
+  ];
+  const byHref=href=>pages.findIndex(p=>p.href===href);
+  const idx=Math.max(0,byHref(current));
+
+  if(body.classList.contains('site-v4')){
+    const hero=document.querySelector('.page-hero');
+    if(hero){
+      if(!hero.querySelector('.actions')){
+        const c=hero.querySelector('.container');
+        if(c){
+          const actions=document.createElement('div');
+          actions.className='actions';
+          actions.innerHTML='<a class="cta hot" href="contact.html">Zapytaj / rezerwuj</a><a class="cta" href="#dalej">Zobacz dalej</a>';
+          c.appendChild(actions);
+        }
+      }
+
+      if(!document.querySelector('.unified-deck')){
+        const deck=document.createElement('nav');
+        deck.className='unified-deck reveal';
+        deck.setAttribute('aria-label','Szybka nawigacja GLOW');
+        deck.innerHTML='<div class="container unified-deck-inner">'+pages.map((p,i)=>
+          '<a href="'+p.href+'"'+(i===idx?' class="active" aria-current="page"':'')+'><i>'+p.icon+'</i><span>'+p.label+'</span></a>'
+        ).join('')+'</div>';
+        hero.insertAdjacentElement('afterend',deck);
+      }
+    }
+  }
+
+  if(!document.querySelector('.site-pager')){
+    const footer=document.querySelector('footer');
+    if(footer){
+      const prev=pages[(idx-1+pages.length)%pages.length];
+      const next=pages[(idx+1)%pages.length];
+      const pager=document.createElement('nav');
+      pager.className='site-pager reveal';
+      pager.setAttribute('aria-label','Przejdź do poprzedniej lub następnej strony');
+      pager.innerHTML=
+        '<div class="container site-pager-inner">'+
+          '<a class="pager-link prev" href="'+prev.href+'"><small>← Poprzednia</small><strong>'+prev.label+'</strong></a>'+
+          '<div class="pager-status"><span>'+String(idx+1).padStart(2,'0')+'</span><i></i><span>'+String(pages.length).padStart(2,'0')+'</span></div>'+
+          '<a class="pager-link next" href="'+next.href+'"><small>Następna →</small><strong>'+next.label+'</strong></a>'+
+        '</div>';
+      footer.insertAdjacentElement('beforebegin',pager);
+    }
+  }
+
+  const deck=document.querySelector('.unified-deck-inner');
+  if(deck){
+    const active=deck.querySelector('.active');
+    if(active) setTimeout(()=>active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}),180);
+  }
+
+  addEventListener('keydown',e=>{
+    const tag=(document.activeElement?.tagName||'').toLowerCase();
+    if(['input','textarea','select'].includes(tag)) return;
+    if(e.altKey && e.key==='ArrowLeft'){location.href=pages[(idx-1+pages.length)%pages.length].href}
+    if(e.altKey && e.key==='ArrowRight'){location.href=pages[(idx+1)%pages.length].href}
+  });
+})();
+
+
+/* MOBILE FIX — deterministic deck arrows and centered active tab */
+;(()=>{
+  const deck=document.querySelector('.unified-deck-inner');
+  if(!deck || deck.closest('.unified-deck-wrap')) return;
+
+  const wrap=document.createElement('div');
+  wrap.className='unified-deck-wrap';
+  deck.parentNode.insertBefore(wrap,deck);
+  wrap.appendChild(deck);
+
+  const prev=document.createElement('button');
+  prev.type='button';
+  prev.className='deck-arrow prev';
+  prev.setAttribute('aria-label','Przewiń menu w lewo');
+  prev.textContent='‹';
+
+  const next=document.createElement('button');
+  next.type='button';
+  next.className='deck-arrow next';
+  next.setAttribute('aria-label','Przewiń menu w prawo');
+  next.textContent='›';
+
+  wrap.append(prev,next);
+
+  const step=()=>Math.max(220,Math.min(deck.clientWidth*.72,480));
+  prev.addEventListener('click',()=>deck.scrollBy({left:-step(),behavior:'smooth'}));
+  next.addEventListener('click',()=>deck.scrollBy({left:step(),behavior:'smooth'}));
+
+  const active=deck.querySelector('.active');
+  if(active){
+    setTimeout(()=>{
+      const left=active.offsetLeft-(deck.clientWidth-active.clientWidth)/2;
+      deck.scrollTo({left:Math.max(0,left),behavior:'smooth'});
+    },220);
+  }
+
+  const sync=()=>{
+    const max=deck.scrollWidth-deck.clientWidth-2;
+    prev.disabled=deck.scrollLeft<=4;
+    next.disabled=deck.scrollLeft>=max;
+    prev.style.opacity=prev.disabled?'.34':'1';
+    next.style.opacity=next.disabled?'.34':'1';
+  };
+  deck.addEventListener('scroll',sync,{passive:true});
+  addEventListener('resize',sync,{passive:true});
+  setTimeout(sync,260);
+})();
