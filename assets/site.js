@@ -239,6 +239,7 @@ root.querySelectorAll('form[data-lead]').forEach(f=>f.addEventListener('submit',
     {href:'business.html',label:'Biznes',icon:'♟'},
     {href:'gallery.html',label:'Galeria',icon:'▧'},
     {href:'members.html',label:'Klubowicze',icon:'☆'},
+    {href:'vip.html',label:'VIP',icon:'♛'},
     {href:'contact.html',label:'Kontakt',icon:'⌖'}
   ];
   const byHref=href=>pages.findIndex(p=>p.href===href);
@@ -348,4 +349,136 @@ root.querySelectorAll('form[data-lead]').forEach(f=>f.addEventListener('submit',
   deck.addEventListener('scroll',sync,{passive:true});
   addEventListener('resize',sync,{passive:true});
   setTimeout(sync,260);
+})();
+
+
+/* =========================================================
+   PREMIUM MODULES — reviews carousel + GLOW Concierge
+   ========================================================= */
+;(()=>{
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Reviews: premium focus cycle, manual dots, mobile scroll sync.
+  const stage=document.querySelector('[data-reviews]');
+  if(stage){
+    const cards=[...stage.querySelectorAll('.review-card')];
+    const dots=[...document.querySelectorAll('.review-dots button')];
+    let idx=0,timer=0;
+    const show=n=>{
+      idx=(n+cards.length)%cards.length;
+      cards.forEach((c,i)=>c.classList.toggle('active',i===idx));
+      dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+      if(innerWidth<761){
+        cards[idx].scrollIntoView({behavior:reduced?'auto':'smooth',block:'nearest',inline:'center'});
+      }
+    };
+    const play=()=>{
+      if(reduced) return;
+      clearInterval(timer);
+      timer=setInterval(()=>show(idx+1),5200);
+    };
+    dots.forEach((d,i)=>d.addEventListener('click',()=>{show(i);play();}));
+    stage.addEventListener('mouseenter',()=>clearInterval(timer));
+    stage.addEventListener('mouseleave',play);
+    stage.addEventListener('focusin',()=>clearInterval(timer));
+    stage.addEventListener('focusout',play);
+    show(0); play();
+  }
+
+  // Honest concierge: instant information + handoff to human contact, no fake live-agent claim.
+  const launch=document.createElement('button');
+  launch.type='button';
+  launch.className='chat-launch';
+  launch.setAttribute('aria-label','Otwórz GLOW Concierge');
+  launch.setAttribute('aria-expanded','false');
+  launch.innerHTML='✦<span aria-hidden="true"></span>';
+
+  const panel=document.createElement('section');
+  panel.className='chat-panel';
+  panel.setAttribute('aria-label','GLOW Concierge');
+  panel.innerHTML=
+    '<div class="chat-head">'+
+      '<div class="chat-avatar">G</div>'+
+      '<div><b>GLOW Concierge</b><small>Asystent informacji · rezerwacje potwierdza obsługa</small></div>'+
+      '<button class="chat-close" type="button" aria-label="Zamknij">×</button>'+
+    '</div>'+
+    '<div class="chat-log" aria-live="polite">'+
+      '<div class="chat-msg bot">Cześć! Pomogę Ci szybko znaleźć właściwą ścieżkę. Wybierz temat:<div class="chat-quick">'+
+        '<button type="button" data-chat-topic="table">Stolik</button>'+
+        '<button type="button" data-chat-topic="vip">VIP</button>'+
+        '<button type="button" data-chat-topic="hotel">Hotel</button>'+
+        '<button type="button" data-chat-topic="events">Wydarzenia</button>'+
+        '<button type="button" data-chat-topic="business">Event firmowy</button>'+
+        '<button type="button" data-chat-topic="wedding">Wesele</button>'+
+      '</div></div>'+
+    '</div>'+
+    '<form class="chat-form"><input name="chat" maxlength="280" placeholder="Napisz, czego potrzebujesz…" aria-label="Wiadomość"><button type="submit" aria-label="Wyślij">→</button></form>';
+
+  document.body.append(launch,panel);
+
+  const log=panel.querySelector('.chat-log');
+  const close=panel.querySelector('.chat-close');
+  const form=panel.querySelector('.chat-form');
+  const input=form.querySelector('input');
+
+  const openChat=()=>{
+    panel.classList.add('open');
+    launch.setAttribute('aria-expanded','true');
+    setTimeout(()=>input.focus({preventScroll:true}),120);
+  };
+  const closeChat=()=>{
+    panel.classList.remove('open');
+    launch.setAttribute('aria-expanded','false');
+  };
+  launch.addEventListener('click',()=>panel.classList.contains('open')?closeChat():openChat());
+  close.addEventListener('click',closeChat);
+  addEventListener('keydown',e=>{if(e.key==='Escape') closeChat();});
+  document.addEventListener('click',e=>{
+    if(e.target.closest('[data-open-chat]')){e.preventDefault();openChat();}
+  });
+
+  const addMsg=(type,text,html='')=>{
+    const div=document.createElement('div');
+    div.className='chat-msg '+type;
+    if(html) div.innerHTML=html; else div.textContent=text;
+    log.appendChild(div);
+    log.scrollTop=log.scrollHeight;
+  };
+
+  const topicReply={
+    table:'Rezerwację stolika potwierdza obsługa. Możesz zadzwonić pod <a href="tel:+48886883021">+48 886 883 021</a> albo przejść do <a href="contact.html">formularza kontaktowego</a>.',
+    vip:'Strefa VIP ma osobną stronę z akcjami, wydarzeniami i informacjami dla posiadaczy kart. <a href="vip.html">Otwórz GLOW VIP Club →</a>',
+    hotel:'Sprawdź <a href="hotel.html">GLOW Rooms</a>. Dostępność i cenę dla konkretnego terminu potwierdza obsługa.',
+    events:'Aktualne wydarzenia znajdziesz w <a href="events.html">kalendarzu GLOW</a>. Dedykowane terminy VIP będą publikowane na stronie VIP.',
+    business:'Dla eventów firmowych przygotowaliśmy osobną ścieżkę. <a href="business.html">Zobacz ofertę B2B →</a>',
+    wedding:'Wesele, nocleg i wieczór w jednym miejscu — <a href="weddings.html">zobacz stronę weselną →</a>'
+  };
+  panel.addEventListener('click',e=>{
+    const b=e.target.closest('[data-chat-topic]');
+    if(!b) return;
+    addMsg('user',b.textContent.trim());
+    setTimeout(()=>addMsg('bot','',topicReply[b.dataset.chatTopic]),180);
+  });
+
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const value=input.value.trim();
+    if(!value) return;
+    addMsg('user',value);
+    sessionStorage.setItem('glow_chat_draft',value);
+    input.value='';
+    setTimeout(()=>addMsg('bot','',
+      'Dzięki. Nie udaję połączenia z żywym konsultantem — przekaż wiadomość obsłudze przez <a href="contact.html">kontakt</a> lub zadzwoń <a href="tel:+48886883021">+48 886 883 021</a>. Twoja treść zostanie podpowiedziana w formularzu.'
+    ),220);
+  });
+
+  // Carry the chat draft into the existing contact form.
+  if((location.pathname.split('/').pop()||'').toLowerCase()==='contact.html'){
+    const draft=sessionStorage.getItem('glow_chat_draft');
+    const area=document.querySelector('textarea[name="message"]');
+    if(draft && area && !area.value){
+      area.value=draft;
+      area.dispatchEvent(new Event('input',{bubbles:true}));
+    }
+  }
 })();
