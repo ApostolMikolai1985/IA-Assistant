@@ -289,10 +289,6 @@ root.querySelectorAll('form[data-lead]').forEach(f=>f.addEventListener('submit',
   }
 
   const deck=document.querySelector('.unified-deck-inner');
-  if(deck){
-    const active=deck.querySelector('.active');
-    if(active) setTimeout(()=>active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}),180);
-  }
 
   addEventListener('keydown',e=>{
     const tag=(document.activeElement?.tagName||'').toLowerCase();
@@ -369,7 +365,9 @@ root.querySelectorAll('form[data-lead]').forEach(f=>f.addEventListener('submit',
       cards.forEach((c,i)=>c.classList.toggle('active',i===idx));
       dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
       if(innerWidth<761){
-        cards[idx].scrollIntoView({behavior:reduced?'auto':'smooth',block:'nearest',inline:'center'});
+        const card=cards[idx];
+        const left=card.offsetLeft-(stage.clientWidth-card.clientWidth)/2;
+        stage.scrollTo({left:Math.max(0,left),behavior:reduced?'auto':'smooth'});
       }
     };
     const play=()=>{
