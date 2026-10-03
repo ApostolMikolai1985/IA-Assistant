@@ -27,3 +27,54 @@ root.querySelectorAll('form[data-lead]').forEach(f=>f.addEventListener('submit',
     addEventListener('keydown',e=>{if(lb.hidden)return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')step(-1);if(e.key==='ArrowRight')step(1)});
   }
 })();
+
+
+;(()=>{
+  if(!document.body.classList.contains('home-v4')) return;
+
+  // Horizontal gallery controls.
+  const rail=document.querySelector('[data-rail]');
+  if(rail){
+    document.querySelectorAll('[data-slide]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const dir=Number(btn.dataset.slide||1);
+        rail.scrollBy({left:dir*Math.min(rail.clientWidth*.75,520),behavior:'smooth'});
+      });
+    });
+  }
+
+  // Light hero parallax on capable devices.
+  const heroImg=document.querySelector('.v4-hero-bg img');
+  if(heroImg && !matchMedia('(prefers-reduced-motion: reduce)').matches && matchMedia('(pointer:fine)').matches){
+    let raf=0;
+    addEventListener('mousemove',e=>{
+      cancelAnimationFrame(raf);
+      raf=requestAnimationFrame(()=>{
+        const x=(e.clientX/innerWidth-.5)*8;
+        const y=(e.clientY/innerHeight-.5)*5;
+        heroImg.style.transform='scale(1.035) translate('+(-x)+'px,'+(-y)+'px)';
+      });
+    },{passive:true});
+  }
+
+  // Magnetic micro-interaction for primary actions.
+  if(matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('.magnetic').forEach(el=>{
+      el.addEventListener('mousemove',e=>{
+        const r=el.getBoundingClientRect();
+        const x=(e.clientX-r.left-r.width/2)*.08;
+        const y=(e.clientY-r.top-r.height/2)*.08;
+        el.style.transform='translate('+x+'px,'+y+'px)';
+      });
+      el.addEventListener('mouseleave',()=>el.style.transform='');
+    });
+  }
+
+  // Close mobile menu after navigation.
+  const panel=document.querySelector('.mobile-panel');
+  const menu=document.querySelector('.menu-btn');
+  document.querySelectorAll('.mobile-panel a').forEach(a=>a.addEventListener('click',()=>{
+    panel?.classList.remove('open');
+    menu?.setAttribute('aria-expanded','false');
+  }));
+})();
