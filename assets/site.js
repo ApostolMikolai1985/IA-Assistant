@@ -117,3 +117,108 @@ root.querySelectorAll('form[data-lead]').forEach(f=>f.addEventListener('submit',
     },{passive:false});
   }
 })();
+
+
+/* POLISH CYCLE 2026-10-03 — premium motion + navigation */
+;(()=>{
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine=matchMedia('(pointer:fine)').matches;
+
+  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+  document.querySelectorAll('a[href]').forEach(a=>{
+    const raw=a.getAttribute('href')||'';
+    if(!raw || raw.startsWith('#') || raw.startsWith('mailto:') || raw.startsWith('tel:')) return;
+    const clean=raw.split('#')[0].split('?')[0].split('/').pop()?.toLowerCase();
+    if(clean && clean===current && a.closest('.navlinks,.v5-mainnav,.mobile-panel,.v5-mobile')){
+      a.classList.add('active');
+      a.setAttribute('aria-current','page');
+    }
+  });
+
+  const headers=[...document.querySelectorAll('.topbar,.v5-header')];
+  const syncHeader=()=>{
+    const on=scrollY>36;
+    headers.forEach(h=>h.classList.toggle('is-scrolled',on));
+  };
+  addEventListener('scroll',syncHeader,{passive:true});
+  syncHeader();
+
+  const menu=document.querySelector('.menu-btn,.v5-menu');
+  const panel=document.querySelector('.mobile-panel,.v5-mobile');
+  if(menu && panel){
+    const close=()=>{
+      panel.classList.remove('open');
+      menu.setAttribute('aria-expanded','false');
+      document.body.classList.remove('menu-open');
+    };
+    menu.addEventListener('click',()=>requestAnimationFrame(()=>{
+      document.body.classList.toggle('menu-open',panel.classList.contains('open'));
+    }));
+    panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+    addEventListener('keydown',e=>{if(e.key==='Escape') close();});
+    addEventListener('resize',()=>{if(innerWidth>1020) close();},{passive:true});
+  }
+
+  document.querySelectorAll('section').forEach(section=>{
+    [...section.querySelectorAll('.reveal')].forEach((el,i)=>{
+      el.style.setProperty('--reveal-delay',Math.min(i*70,350)+'ms');
+    });
+  });
+})();
+
+;(()=>{
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine=matchMedia('(pointer:fine)').matches;
+
+  if(fine && !reduced){
+    document.querySelectorAll('.v5-offer,.v5-event,.v5-promo,.photo-card,.gallery-item,.card').forEach(el=>{
+      el.classList.add('polish-tilt');
+      el.addEventListener('pointerenter',()=>el.style.setProperty('--lift','-4px'));
+      el.addEventListener('pointermove',e=>{
+        const r=el.getBoundingClientRect();
+        const x=(e.clientX-r.left)/r.width-.5;
+        const y=(e.clientY-r.top)/r.height-.5;
+        el.style.setProperty('--tilt-x',(-y*2.4)+'deg');
+        el.style.setProperty('--tilt-y',(x*2.6)+'deg');
+      });
+      el.addEventListener('pointerleave',()=>{
+        el.style.setProperty('--tilt-x','0deg');
+        el.style.setProperty('--tilt-y','0deg');
+        el.style.setProperty('--lift','0px');
+      });
+    });
+
+    const glow=document.createElement('div');
+    glow.className='site-spotlight';
+    glow.setAttribute('aria-hidden','true');
+    document.body.appendChild(glow);
+    let raf=0,tx=innerWidth*.55,ty=innerHeight*.32;
+    addEventListener('pointermove',e=>{
+      tx=e.clientX;ty=e.clientY;
+      if(raf) return;
+      raf=requestAnimationFrame(()=>{
+        glow.style.transform='translate3d('+(tx-180)+'px,'+(ty-180)+'px,0)';
+        raf=0;
+      });
+    },{passive:true});
+  }
+
+  const top=document.createElement('button');
+  top.type='button';
+  top.className='back-top';
+  top.textContent='↑';
+  top.setAttribute('aria-label','Wróć na górę');
+  document.body.appendChild(top);
+  const syncTop=()=>top.classList.toggle('show',scrollY>720);
+  addEventListener('scroll',syncTop,{passive:true});
+  syncTop();
+  top.addEventListener('click',()=>scrollTo({top:0,behavior:reduced?'auto':'smooth'}));
+
+  const prime=document.querySelector('.v5-reserve,.v5-button.gold,.cta.hot');
+  if(prime){
+    setTimeout(()=>{
+      prime.classList.add('cta-awake');
+      setTimeout(()=>prime.classList.remove('cta-awake'),1500);
+    },1000);
+  }
+})();
